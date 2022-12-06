@@ -17,6 +17,7 @@ def read_dict(conn):
     rows = cur.fetchall()
     cur.close()
     return rows
+# two contacts added
 def add_word(conn, id, first_name, last_name, title, organization):
     cur = conn.cursor()
     cur.execute(f"INSERT INTO contacts (id, first_name, last_name, title, organization) VALUES ('{id}', '{first_name}', '{last_name}', '{title}', '{organization}');")
