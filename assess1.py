@@ -10,7 +10,7 @@ conn = psycopg2.connect(
    user="postgres",
    password="Philip1986??"
 )
-
+# functions to list, add and delete contacts made
 def read_dict(conn):
     cur = conn.cursor()
     cur.execute("SELECT * FROM contacts;")
