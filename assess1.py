@@ -1,7 +1,7 @@
 import psycopg2
 
-print("Welcome to the phone list, the following commands are available:")
-print("LIST, INSERT, DELETE")
+print("Welcome to the contacts, the following commands are available:")
+print("LIST, INSERT, DELETE, SAVE")
 
 conn = psycopg2.connect(
    host="localhost",
@@ -24,12 +24,16 @@ def add_word(conn, id, first_name, last_name, title, organization):
     cur.close()
     print(f"{first_name} added!")
 # contact deleted
-def delete_word(conn, id):
+def delete_word(conn, first_name):
     cur = conn.cursor()
-    cur.execute(f"DELETE FROM contacts WHERE first_name = ('{id}');")
+    cur.execute(f"DELETE FROM contacts WHERE first_name = ('{first_name}');")
     cur.close()
-    print(f"{id} deleted!")
+    print(f"{first_name} deleted!")
 # loop made
+def save_dict(conn):
+    cur = conn.cursor()
+    cur.execute("COMMIT;")
+    cur.close()
 while True: 
     cmd = input("Command: ")
     if cmd == "LIST":
@@ -42,5 +46,8 @@ while True:
         organization = input("  Organization: ")
         add_word(conn, id, first_name, last_name, title, organization)
     elif cmd == "DELETE":
-        id = input("  Id: ")
-        delete_word(conn, id)
+        first_name = input("  First name: ")
+        delete_word(conn, first_name)
+    elif cmd == "SAVE":
+        save_dict(conn)
+        exit()
