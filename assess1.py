@@ -23,10 +23,12 @@ def add_word(conn, id, first_name, last_name, title, organization):
     cur.execute(f"INSERT INTO contacts (id, first_name, last_name, title, organization) VALUES ('{id}', '{first_name}', '{last_name}', '{title}', '{organization}');")
     cur.close()
     print(f"{first_name} added!")
-def delete_word(conn, first_name):
+# contact deleted
+def delete_word(conn, id):
     cur = conn.cursor()
-    cur.execute(f"DELETE FROM contacts WHERE id = '{first_name}';")
+    cur.execute(f"DELETE FROM contacts WHERE first_name = ('{id}');")
     cur.close()
+    print(f"{id} deleted!")
 # loop made
 while True: 
     cmd = input("Command: ")
@@ -40,5 +42,5 @@ while True:
         organization = input("  Organization: ")
         add_word(conn, id, first_name, last_name, title, organization)
     elif cmd == "DELETE":
-        first_name = input("  First name: ")
-        delete_word(conn, first_name)
+        id = input("  Id: ")
+        delete_word(conn, id)
